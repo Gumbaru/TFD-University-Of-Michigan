@@ -1,0 +1,36 @@
+@startuml
+' Classe Observable
+class Order {
+  - id: long
+  - itemCount: int
+  - totalPrice: double
+  - shippingCost: double
+  - observers: List<OrderObserver>
+
+  + attach(o: OrderObserver): void
+  + detach(o: OrderObserver): void
+  + addItem(price: double): void
+  + getTotalPrice(): double
+  + getItemCount(): int
+  + getShippingCost(): double
+  + toString(): String
+}
+
+' Interface Observateur
+interface OrderObserver {
+  + update(order: Order): void
+}
+
+' Observers concrets
+class PriceObserver {
+  + update(order: Order): void
+}
+class QuantityObserver {
+  + update(order: Order): void
+}
+
+' Relations
+Order --> OrderObserver : notify
+OrderObserver <|-- PriceObserver
+OrderObserver <|-- QuantityObserver
+@enduml
